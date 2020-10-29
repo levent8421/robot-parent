@@ -4,6 +4,7 @@ import com.levent8421.robot.hardware.device.PwmOutputDevice;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinPwmOutput;
 import com.pi4j.io.gpio.Pin;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Create By Levent8421
@@ -15,6 +16,7 @@ import com.pi4j.io.gpio.Pin;
  *
  * @author Levent8421
  */
+@Slf4j
 public class RpiPwmOutputDevice implements PwmOutputDevice {
     private final GpioController gpioController;
     private final Pin pin;
@@ -29,7 +31,7 @@ public class RpiPwmOutputDevice implements PwmOutputDevice {
     }
 
     @Override
-    public void setup(int freq, int maxDutyCycle) {
+    public void setup() {
         pwm = gpioController.provisionPwmOutputPin(pin);
         pwm.setPwmRange(maxDutyCycle);
     }
@@ -48,6 +50,7 @@ public class RpiPwmOutputDevice implements PwmOutputDevice {
     public void setDutyCycle(int dutyCycle) {
         pwm.setPwm(dutyCycle);
         this.dutyCycle = dutyCycle;
+        log.debug("Set pin[{}] pwm to [{}]", pin.getName(), dutyCycle);
     }
 
     @Override

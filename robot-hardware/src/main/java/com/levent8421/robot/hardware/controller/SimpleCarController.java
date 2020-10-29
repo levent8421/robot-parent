@@ -36,7 +36,11 @@ public class SimpleCarController implements CarController {
 
     @Override
     public void setup() {
-
+        enOutput.setup();
+        flMotor.setup();
+        frMotor.setup();
+        blMotor.setup();
+        brMotor.setup();
     }
 
     @Override
@@ -46,6 +50,31 @@ public class SimpleCarController implements CarController {
 
     @Override
     public void stop() {
+        enOutput.pollDown();
+    }
 
+    @Override
+    public void start() {
+        enOutput.pollUp();
+    }
+
+    @Override
+    public void setMotorSpeed(int motor, int speed) {
+        switch (motor) {
+            case MOTOR_FRONT_LEFT:
+                flMotor.setSpeed(speed);
+                break;
+            case MOTOR_FRONT_RIGHT:
+                frMotor.setSpeed(speed);
+                break;
+            case MOTOR_BACK_LEFT:
+                blMotor.setSpeed(speed);
+                break;
+            case MOTOR_BACK_RIGHT:
+                brMotor.setSpeed(speed);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown motor " + motor);
+        }
     }
 }

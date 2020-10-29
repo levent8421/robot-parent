@@ -42,7 +42,7 @@ public interface Motor {
     /**
      * 设置速度
      *
-     * @param speed 速度
+     * @param speed 速度 为负值时为倒转
      */
     void setSpeed(int speed);
 

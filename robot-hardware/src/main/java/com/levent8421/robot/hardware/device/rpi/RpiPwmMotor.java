@@ -5,6 +5,7 @@ import com.levent8421.robot.hardware.device.Motor;
 import com.levent8421.robot.hardware.device.PwmOutputDevice;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.Pin;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Create By Levent8421
@@ -16,6 +17,7 @@ import com.pi4j.io.gpio.Pin;
  *
  * @author Levent8421
  */
+@Slf4j
 public class RpiPwmMotor implements Motor {
     private final PwmOutputDevice pwmPin;
     private final DigitalOutputDevice dirPin;
@@ -37,6 +39,8 @@ public class RpiPwmMotor implements Motor {
 
     @Override
     public void setup() {
+        pwmPin.setup();
+        dirPin.setup();
         this.setDirection(DIR_FORWARD);
         this.setSpeed(0);
     }
@@ -63,7 +67,12 @@ public class RpiPwmMotor implements Motor {
 
     @Override
     public void setSpeed(int speed) {
-        pwmPin.setDutyCycle(speed);
+        if (speed > 0) {
+            setDirection(DIR_FORWARD);
+        } else if (speed < 0) {
+            setDirection(DIR_BACKWARD);
+        }
+        pwmPin.setDutyCycle(Math.abs(speed));
         this.speed = speed;
     }
 

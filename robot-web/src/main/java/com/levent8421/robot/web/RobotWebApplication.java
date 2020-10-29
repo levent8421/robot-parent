@@ -2,6 +2,7 @@ package com.levent8421.robot.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * Create By Levent8421
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author Levent8421
  */
+@EnableWebSocket
 @SpringBootApplication
 public class RobotWebApplication {
     /**

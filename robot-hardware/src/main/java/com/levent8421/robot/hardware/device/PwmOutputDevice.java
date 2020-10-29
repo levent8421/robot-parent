@@ -13,11 +13,8 @@ package com.levent8421.robot.hardware.device;
 public interface PwmOutputDevice {
     /**
      * Initialize this pwm pin
-     *
-     * @param freq         PWM频率
-     * @param maxDutyCycle 最大占空比
      */
-    void setup(int freq, int maxDutyCycle);
+    void setup();
 
     /**
      * set duty cycle to 0

@@ -11,6 +11,11 @@ package com.levent8421.robot.hardware.controller;
  * @author Levent8421
  */
 public interface CarController {
+    int MOTOR_FRONT_LEFT = 1;
+    int MOTOR_FRONT_RIGHT = 2;
+    int MOTOR_BACK_LEFT = 3;
+    int MOTOR_BACK_RIGHT = 4;
+
     /**
      * Initialize this controller
      */
@@ -28,4 +33,17 @@ public interface CarController {
      * Stop move
      */
     void stop();
+
+    /**
+     * start move
+     */
+    void start();
+
+    /**
+     * 设置指定电机的速度
+     *
+     * @param motor 电机编号
+     * @param speed 速度 为负值时为倒转
+     */
+    void setMotorSpeed(int motor, int speed);
 }
