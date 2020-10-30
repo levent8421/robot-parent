@@ -17,44 +17,13 @@ import lombok.extern.slf4j.Slf4j;
  * @author Levent8421
  */
 @Slf4j
-public class RpiPwmOutputDevice implements PwmOutputDevice {
-    private final GpioController gpioController;
-    private final Pin pin;
-    private final int maxDutyCycle;
-    private volatile int dutyCycle = 0;
-    private GpioPinPwmOutput pwm;
-
-    public RpiPwmOutputDevice(GpioController gpioController, Pin pin, int maxDutyCycle) {
-        this.gpioController = gpioController;
-        this.pin = pin;
-        this.maxDutyCycle = maxDutyCycle;
+public class RpiPwmOutputDevice extends AbstractRpiPwmOutputDevice implements PwmOutputDevice {
+    public RpiPwmOutputDevice(GpioController gpioController, Pin pin, int pwmRange) {
+        super(gpioController, pin, pwmRange);
     }
 
     @Override
-    public void setup() {
-        pwm = gpioController.provisionPwmOutputPin(pin);
-        pwm.setPwmRange(maxDutyCycle);
-    }
-
-    @Override
-    public void off() {
-        setDutyCycle(0);
-    }
-
-    @Override
-    public void on() {
-        setDutyCycle(maxDutyCycle);
-    }
-
-    @Override
-    public void setDutyCycle(int dutyCycle) {
-        pwm.setPwm(dutyCycle);
-        this.dutyCycle = dutyCycle;
-        log.debug("Set pin[{}] pwm to [{}]", pin.getName(), dutyCycle);
-    }
-
-    @Override
-    public int getDutyCycle() {
-        return dutyCycle;
+    protected GpioPinPwmOutput getPwmOutputPin(GpioController gpioController, Pin pin) {
+        return gpioController.provisionPwmOutputPin(pin);
     }
 }

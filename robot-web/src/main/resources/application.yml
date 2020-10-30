@@ -1,7 +1,7 @@
 server:
   port: 9001
 pwm:
-  frequency-division: 250
+  frequency-division: 2
 logging:
   level:
     com.levent8421.robot: debug

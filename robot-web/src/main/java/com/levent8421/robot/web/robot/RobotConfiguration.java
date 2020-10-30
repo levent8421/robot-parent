@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class RobotConfiguration {
     private static final int PWM_RANGE = 1024;
     @Setter
-    private Integer frequencyDivision = 250;
+    private Integer frequencyDivision = 2;
 
     @Bean
     public CarController carController() {
