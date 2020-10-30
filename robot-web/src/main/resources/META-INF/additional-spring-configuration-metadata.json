@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "pwm.frequency-division",
+      "type": "java.lang.String",
+      "description": "PWM Frequency Division."
+    }
+  ]
+}

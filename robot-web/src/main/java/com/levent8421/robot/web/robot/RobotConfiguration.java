@@ -9,6 +9,8 @@ import com.levent8421.robot.hardware.device.rpi.RpiDigitalOutputDevice;
 import com.levent8421.robot.hardware.device.rpi.RpiPwmMotor;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.RaspiPin;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,15 +22,16 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author leven
  */
+@ConfigurationProperties("pwm")
 @Configuration
 public class RobotConfiguration {
     private static final int PWM_RANGE = 1024;
-    private static final int PWM_FREQ = 4 * 1000;
+    @Setter
+    private Integer frequencyDivision = 250;
 
     @Bean
     public CarController carController() {
         final GpioController gpioController = RpiDeviceUtils.getGpioController();
-        RpiDeviceUtils.setupPwm(PWM_RANGE, 18);
         final Motor flMotor = new RpiPwmMotor(gpioController, RaspiPin.GPIO_25, RaspiPin.GPIO_24, PWM_RANGE);
         final Motor frMotor = new RpiPwmMotor(gpioController, RaspiPin.GPIO_22, RaspiPin.GPIO_23, PWM_RANGE);
         final Motor blMotor = new RpiPwmMotor(gpioController, RaspiPin.GPIO_29, RaspiPin.GPIO_01, PWM_RANGE);
@@ -36,6 +39,7 @@ public class RobotConfiguration {
         final DigitalOutputDevice enPin = new RpiDigitalOutputDevice(gpioController, RaspiPin.GPIO_21);
         final CarController controller = new SimpleCarController(enPin, flMotor, frMotor, blMotor, brMotor);
         controller.setup();
+        RpiDeviceUtils.setupPwm(PWM_RANGE, frequencyDivision);
         return controller;
     }
 }
