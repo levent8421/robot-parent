@@ -4,6 +4,7 @@ function SpeedController(id, controller) {
     this._wrapper = null;
     this._inner = null;
     this._name = parseInt(this._dom.getAttribute('data-name'));
+    this._max = parseInt(this._dom.getAttribute('data-max'));
     this._init();
 }
 
@@ -24,7 +25,8 @@ SpeedController.prototype = {
         };
     },
     calcPwm: function (value) {
-        return 1024 * value / (CONTROLLER_WIDTH / 2);
+        var max = this._max;
+        return max * value / (CONTROLLER_WIDTH / 2);
     },
     setSpeed: function (value) {
         var msg = {
