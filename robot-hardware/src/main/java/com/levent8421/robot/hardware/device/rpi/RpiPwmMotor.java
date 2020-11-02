@@ -25,15 +25,19 @@ public class RpiPwmMotor implements Motor {
     private volatile int speed;
 
     public RpiPwmMotor(GpioController gpioController, Pin dirPin, Pin pwmPin, int pwmRange) {
-        this.pwmPin = buildPwmDevice(gpioController, pwmPin, pwmRange);
-        this.dirPin = buildDirDevice(gpioController, dirPin);
+        this(buildDirDevice(gpioController, dirPin), buildPwmDevice(gpioController, pwmPin, pwmRange));
     }
 
-    private DigitalOutputDevice buildDirDevice(GpioController gpioController, Pin pin) {
+    public RpiPwmMotor(DigitalOutputDevice dirOutput, PwmOutputDevice pwmOutput) {
+        this.dirPin = dirOutput;
+        this.pwmPin = pwmOutput;
+    }
+
+    private static DigitalOutputDevice buildDirDevice(GpioController gpioController, Pin pin) {
         return new RpiDigitalOutputDevice(gpioController, pin);
     }
 
-    private PwmOutputDevice buildPwmDevice(GpioController gpioController, Pin pin, int pwmRange) {
+    private static PwmOutputDevice buildPwmDevice(GpioController gpioController, Pin pin, int pwmRange) {
         return new RpiPwmOutputDevice(gpioController, pin, pwmRange);
     }
 
