@@ -67,10 +67,10 @@ public class RobotConfiguration {
         final GpioController gpioController = RpiDeviceUtils.getGpioController();
         final PCA9685GpioProvider provider = initPca9685(gpioController);
 
-        final Motor flMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_25, PCA9685Pin.PWM_00);
-        final Motor frMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_29, PCA9685Pin.PWM_01);
-        final Motor blMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_28, PCA9685Pin.PWM_02);
-        final Motor brMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_27, PCA9685Pin.PWM_03);
+        final Motor blMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_25, PCA9685Pin.PWM_00);
+        final Motor flMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_29, PCA9685Pin.PWM_01);
+        final Motor brMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_28, PCA9685Pin.PWM_02);
+        final Motor frMotor = buildPcaMotor(gpioController, provider, RaspiPin.GPIO_27, PCA9685Pin.PWM_03);
 
         final DigitalOutputDevice enPin = new RpiDigitalOutputDevice(gpioController, RaspiPin.GPIO_07);
         final CarController controller = new SimpleCarController(enPin, flMotor, frMotor, blMotor, brMotor);

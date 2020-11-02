@@ -17,12 +17,19 @@ SpeedController.prototype = {
         var _this = this;
         this._wrapper.onclick = function (e) {
             var offsetX = e.offsetX;
-            var value = offsetX - (CONTROLLER_WIDTH / 2);
-            value = _this.calcPwm(value);
-            _this._inner.style.left = offsetX + 'px';
-            _this._valueP.innerText = value;
-            _this.setSpeed(value);
+            _this.showAndSetSpeed(offsetX)
         };
+        var stopBtn = this._dom.getElementsByClassName('btn-stop')[0];
+        stopBtn.onclick = function () {
+            _this.showAndSetSpeed(CONTROLLER_WIDTH / 2);
+        };
+    },
+    showAndSetSpeed: function (offset) {
+        var value = offset - (CONTROLLER_WIDTH / 2);
+        value = this.calcPwm(value);
+        this._inner.style.left = offset + 'px';
+        this._valueP.innerText = value;
+        this.setSpeed(value);
     },
     calcPwm: function (value) {
         var max = this._max;
