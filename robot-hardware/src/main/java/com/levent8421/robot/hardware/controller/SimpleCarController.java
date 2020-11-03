@@ -14,24 +14,27 @@ import com.levent8421.robot.hardware.device.Motor;
  * @author Levent8421
  */
 public class SimpleCarController implements CarController {
+    private static final int DEFAULT_MAX_SPEED = 1000;
     private final DigitalOutputDevice enOutput;
     private final Motor flMotor;
     private final Motor frMotor;
     private final Motor blMotor;
     private final Motor brMotor;
-    private volatile int speed = 0;
-    private volatile int flSpeed = 0;
-    private volatile int frSpeed = 0;
-    private volatile int blSpeed = 0;
-    private volatile int brSpeed = 0;
+    private final int maxSpeed;
 
     public SimpleCarController(DigitalOutputDevice enOutput,
-                               Motor flMotor, Motor frMotor, Motor blMotor, Motor brMotor) {
+                               Motor flMotor, Motor frMotor, Motor blMotor, Motor brMotor, int maxSpeed) {
         this.enOutput = enOutput;
         this.flMotor = flMotor;
         this.frMotor = frMotor;
         this.blMotor = blMotor;
         this.brMotor = brMotor;
+        this.maxSpeed = maxSpeed;
+    }
+
+    public SimpleCarController(DigitalOutputDevice enOutput,
+                               Motor flMotor, Motor frMotor, Motor blMotor, Motor brMotor) {
+        this(enOutput, flMotor, frMotor, blMotor, brMotor, DEFAULT_MAX_SPEED);
     }
 
     @Override
@@ -45,7 +48,12 @@ public class SimpleCarController implements CarController {
 
     @Override
     public void go(double angle, int speed) {
-
+        final DirectionSpeed speedRes
+                = DirectionSpeedUtils.calcDirectionSpeed(speed, angle, maxSpeed, DirectionSpeed.getInstance());
+        flMotor.setSpeed(speedRes.getFrontLeft());
+        frMotor.setSpeed(speedRes.getFrontRight());
+        blMotor.setSpeed(speedRes.getBackLeft());
+        brMotor.setSpeed(speedRes.getBackRight());
     }
 
     @Override
