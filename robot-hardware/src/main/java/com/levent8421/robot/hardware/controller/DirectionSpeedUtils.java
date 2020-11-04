@@ -6,7 +6,7 @@ package com.levent8421.robot.hardware.controller;
  * <p>
  * 方向控制工具类
  * <p>
- * --		进	退
+ * --	进	退
  * 前左	右	左
  * 前右	左	右
  * 后左	左	右
@@ -39,7 +39,7 @@ public class DirectionSpeedUtils {
      * @param speed    速度
      * @param angle    角度
      * @param maxSpeed 最大速度
-     * @param res      计算结果对象，原样返回，若为空将会闯将新对象
+     * @param res      计算结果对象，原样返回，若为空将会创建新对象
      * @return 计算结果包装对象
      */
     public static DirectionSpeed calcDirectionSpeed(int speed, double angle, int maxSpeed, DirectionSpeed res) {
