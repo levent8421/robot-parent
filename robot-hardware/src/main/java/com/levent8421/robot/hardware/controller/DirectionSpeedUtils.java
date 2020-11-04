@@ -34,7 +34,7 @@ public class DirectionSpeedUtils {
     private static final double BACK_RIGHT_ANGLE_OFFSET = 0;
 
     /**
-     * 计算要使小车向指定方向以指定速度移动每个马达所需的速度
+     * 计算要使小车向指定方向以指定速度移动时每个马达所需的速度
      *
      * @param speed    速度
      * @param angle    角度
