@@ -46,7 +46,7 @@ public class RpiPwmMotor implements Motor {
         pwmPin.setup();
         dirPin.setup();
         this.setDirection(DIR_FORWARD);
-        this.setSpeed(0);
+        this.stop();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class RpiPwmMotor implements Motor {
 
     @Override
     public void stop() {
-        setSpeed(0);
+        pwmPin.off();
     }
 
     @Override
